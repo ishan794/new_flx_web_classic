@@ -5,39 +5,46 @@
             <!-- Left Column -->
             <div class="scroll-animate">
                 <span class="text-accent text-sm font-semibold tracking-widest uppercase block mb-4">ABOUT US</span>
-                <h2 class="text-3xl lg:text-4xl font-bold text-text-dark mb-4">Welcome to Flxware Technologies</h2>
-                <p class="text-gray-600 mt-4 text-lg leading-relaxed">
-                    Founded with a vision to bridge the gap between innovative ideas and practical software solutions, Flxware Technologies specializes in creating robust, scalable applications that drive business success. Our team combines technical expertise with creative problem-solving to deliver exceptional results.
+                <h2 class="text-3xl md:text-4xl font-bold text-navy-deep mb-6" data-cms-key="pages.home.welcome.title">
+                    {{ cms_data('pages.home.welcome.title', 'Welcome to Flxware Technologies') }}
+                </h2>
+                <p class="text-gray-600 leading-relaxed mb-6" data-cms-key="pages.home.welcome.desc">
+                    {{ cms_data('pages.home.welcome.desc', 'Founded with a vision to bridge the gap between innovative ideas and practical software solutions, Flxware Technologies specializes in creating robust, scalable applications that drive business success. Our team combines technical expertise with creative problem-solving to deliver exceptional results.') }}
                 </p>
-                <a href="#about" class="text-accent font-medium hover:underline mt-6 inline-block">
-                    Learn More About Us &rarr;
+                <a href="{{ cms_data('pages.home.welcome.link', '/#about') }}" data-cms-href="pages.home.welcome.link" class="inline-flex items-center gap-2 text-accent hover:text-accent-light font-medium transition-colors group">
+                    <span data-cms-key="pages.home.welcome.link_text">{{ cms_data('pages.home.welcome.link_text', 'Learn More About Us') }}</span>
+                    <svg class="transform group-hover:translate-x-1 transition-transform" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
                 </a>
             </div>
 
             <!-- Right Column - Stat Cards -->
-            <div class="scroll-animate" style="transition-delay: 100ms;">
-                <div class="grid grid-cols-3 gap-4">
-                    <!-- Card 1 -->
-                    <div class="bg-white rounded-xl p-6 text-center shadow-sm border border-gray-100 transition-all duration-300 hover:shadow-md">
-                        <div class="text-3xl lg:text-4xl font-bold text-accent mb-2">10+</div>
-                        <div class="font-semibold text-text-dark text-sm">Projects</div>
-                        <div class="text-xs text-gray-500 mt-1">Successfully delivered</div>
-                    </div>
-                    <!-- Card 2 -->
-                    <div class="bg-white rounded-xl p-6 text-center shadow-sm border border-gray-100 transition-all duration-300 hover:shadow-md">
-                        <div class="text-3xl lg:text-4xl font-bold text-accent mb-2">4</div>
-                        <div class="font-semibold text-text-dark text-sm">Years</div>
-                        <div class="text-xs text-gray-500 mt-1">Dedicated service</div>
-                    </div>
-                    <!-- Card 3 -->
-                    <div class="bg-white rounded-xl p-6 text-center shadow-sm border border-gray-100 transition-all duration-300 hover:shadow-md">
-                        <div class="text-3xl lg:text-4xl font-bold text-accent mb-2">100%</div>
-                        <div class="font-semibold text-text-dark text-sm">Satisfaction</div>
-                        <div class="text-xs text-gray-500 mt-1">Client satisfaction</div>
-                    </div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <!-- Card 1 -->
+                <div class="bg-white p-8 rounded-2xl shadow-sm border border-gray-100 text-center scroll-animate hover:shadow-md transition-shadow">
+                    <div class="text-5xl font-bold text-accent mb-3" data-cms-key="pages.home.stats.projects.value">{{ cms_data('pages.home.stats.projects.value', '10+') }}</div>
+                    <div class="text-lg font-bold text-navy-deep mb-1" data-cms-key="pages.home.stats.projects.label">{{ cms_data('pages.home.stats.projects.label', 'Projects') }}</div>
+                    <div class="text-sm text-gray-500" data-cms-key="pages.home.stats.projects.sub">{{ cms_data('pages.home.stats.projects.sub', 'Successfully delivered') }}</div>
                 </div>
-                <p class="text-gray-500 text-sm text-center col-span-3 mt-4">
-                    From startups to enterprises, we build software that matters.
+                
+                <!-- Card 2 -->
+                <div class="bg-white p-8 rounded-2xl shadow-sm border border-gray-100 text-center scroll-animate hover:shadow-md transition-shadow" style="transition-delay: 100ms;">
+                    <div class="text-5xl font-bold text-accent mb-3" data-cms-key="pages.home.stats.years.value">{{ cms_data('pages.home.stats.years.value', '4') }}</div>
+                    <div class="text-lg font-bold text-navy-deep mb-1" data-cms-key="pages.home.stats.years.label">{{ cms_data('pages.home.stats.years.label', 'Years') }}</div>
+                    <div class="text-sm text-gray-500" data-cms-key="pages.home.stats.years.sub">{{ cms_data('pages.home.stats.years.sub', 'Dedicated service') }}</div>
+                </div>
+                
+                <!-- Card 3 -->
+                <div class="bg-white p-8 rounded-2xl shadow-sm border border-gray-100 text-center scroll-animate hover:shadow-md transition-shadow" style="transition-delay: 200ms;">
+                    <div class="text-5xl font-bold text-accent mb-3" data-cms-key="pages.home.stats.satisfaction.value">{{ cms_data('pages.home.stats.satisfaction.value', '100%') }}</div>
+                    <div class="text-lg font-bold text-navy-deep mb-1" data-cms-key="pages.home.stats.satisfaction.label">{{ cms_data('pages.home.stats.satisfaction.label', 'Satisfaction') }}</div>
+                    <div class="text-sm text-gray-500" data-cms-key="pages.home.stats.satisfaction.sub">{{ cms_data('pages.home.stats.satisfaction.sub', 'Client satisfaction') }}</div>
+                </div>
+            </div>
+
+            <!-- Bottom Text -->
+            <div class="col-span-1 lg:col-span-2 text-center mt-8 scroll-animate" style="transition-delay: 300ms;">
+                <p class="text-gray-500 text-lg" data-cms-key="pages.home.stats.bottom_text">
+                    {{ cms_data('pages.home.stats.bottom_text', 'From startups to enterprises, we build software that matters.') }}
                 </p>
             </div>
 

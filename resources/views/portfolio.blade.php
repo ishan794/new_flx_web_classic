@@ -10,7 +10,34 @@
         </div>
 
         <div class="grid-2" style="margin-bottom: 2rem;">
-            <!-- Project 1 -->
+            <!-- Project 1 (PassVault) -->
+            <div class="glass-card fade-in">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                    <span class="badge">Mobile App</span>
+                    <span style="color: var(--text-secondary);">2026</span>
+                </div>
+                <h2>PassVault</h2>
+                <p>A highly secure password manager application that generates unbreakable passwords, syncs securely across all devices, and provides biometric access to your vault.</p>
+                
+                <h4 style="margin-top: 1.5rem;">Key Features:</h4>
+                <ul style="margin-bottom: 1.5rem; list-style-type: disc; margin-left: 1.5rem; color: var(--text-secondary);">
+                    <li>Strong Password Generation</li>
+                    <li>Cross-device Cloud Sync</li>
+                    <li>Biometric Vault Access</li>
+                    <li>Secure Account Recovery</li>
+                </ul>
+
+                <h4 style="margin-top: 1.5rem;">Technologies:</h4>
+                <div style="margin-bottom: 1.5rem;">
+                    <span class="badge">React Native</span>
+                    <span class="badge">Node.js</span>
+                    <span class="badge">Cryptography API</span>
+                </div>
+                
+                <a href="{{ route('portfolio.show', 'passvault') }}" class="btn-outline">View Project Details</a>
+            </div>
+
+            <!-- Project 2 -->
             <div class="glass-card fade-in">
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
                     <span class="badge">Mobile App</span>

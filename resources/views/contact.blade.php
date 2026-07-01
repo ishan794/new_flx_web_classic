@@ -15,7 +15,7 @@
                 <h2>Send us a Message</h2>
                 <p>Fill out the form below and we'll get back to you within 24 hours.</p>
 
-                <form action="#" method="POST" style="margin-top: 2rem;">
+                <form action="{{ route('contact.store') }}" method="POST" style="margin-top: 2rem;">
                     @csrf
                     <div class="form-group">
                         <label for="name">Full Name *</label>

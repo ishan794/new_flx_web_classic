@@ -2,13 +2,36 @@
 @section('title', 'Case Study | Flxware Technologies')
 
 @section('content')
-<section class="section">
-    <div class="container">
-        <a href="{{ route('portfolio') }}" class="btn-outline fade-in" style="margin-bottom: 2rem;">&larr; Back to Portfolio</a>
+<section class="py-16 lg:py-24 bg-navy-dark min-h-screen">
+    <div class="container max-w-7xl mx-auto px-6">
+        <div class="mb-12 scroll-animate">
+            <a href="{{ route('home') }}#portfolio" class="inline-flex items-center text-sm font-semibold text-gray-400 hover:text-accent transition-colors">
+                <span class="mr-2">&larr;</span> Back to Portfolio
+            </a>
+        </div>
 
         @php
             // Mock data for the case studies
             $caseStudies = [
+                'passvault' => [
+                    'title' => 'PassVault',
+                    'client' => 'Internal Product',
+                    'type' => 'Mobile App',
+                    'problem' => 'Users struggle to maintain secure and unique passwords across multiple services, often resorting to weak, easily guessable passwords or reusing the same password, which compromises their digital security.',
+                    'solution' => 'We developed PassVault, a highly secure mobile application that generates unbreakable passwords, stores them in an encrypted vault accessible via biometric login, and syncs seamlessly across all user devices.',
+                    'results' => [
+                        'End-to-end encryption for maximum security',
+                        'Real-time cloud sync across platforms',
+                        'Intuitive and modern user interface'
+                    ],
+                    'images' => [
+                        'generate.png',
+                        'sync.png',
+                        'access.png',
+                        'reset.png',
+                        'create.png'
+                    ]
+                ],
                 'expense-tracker' => [
                     'title' => 'Expense Tracker App',
                     'client' => 'Personal Finance Startup',
@@ -51,43 +74,84 @@
         @endphp
 
         @if(!$caseStudy)
-            <div class="glass-card text-center fade-in">
-                <h2>Project Not Found</h2>
-                <p>The case study you're looking for doesn't exist.</p>
+            <div class="bg-navy-mid border border-white/10 rounded-2xl p-12 text-center scroll-animate">
+                <h2 class="text-3xl font-bold text-white mb-4">Project Not Found</h2>
+                <p class="text-gray-400">The case study you're looking for doesn't exist.</p>
             </div>
         @else
-            <div class="glass-card fade-in">
-                <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 1rem;">
+            <div class="bg-navy-mid border border-white/10 rounded-2xl p-8 lg:p-12 scroll-animate">
+                <div class="flex flex-col md:flex-row md:justify-between md:items-start gap-6 mb-12">
                     <div>
-                        <h1>{{ $caseStudy['title'] }}</h1>
-                        <div style="margin: 1rem 0 2rem;">
-                            <span class="badge">{{ $caseStudy['type'] }}</span>
-                            <span class="badge">{{ $caseStudy['client'] }}</span>
+                        <span class="text-accent text-sm tracking-widest uppercase font-semibold block mb-3">CASE STUDY</span>
+                        <h1 class="text-4xl lg:text-5xl font-bold text-white mb-6">{{ $caseStudy['title'] }}</h1>
+                        <div class="flex flex-wrap gap-3">
+                            <span class="bg-accent/10 text-accent px-4 py-1.5 rounded-full text-sm font-medium border border-accent/20">{{ $caseStudy['type'] }}</span>
+                            <span class="bg-white/5 text-gray-300 px-4 py-1.5 rounded-full text-sm font-medium border border-white/10">{{ $caseStudy['client'] }}</span>
                         </div>
                     </div>
                 </div>
 
-                <div style="width: 100%; height: 400px; background: var(--bg-secondary); border-radius: 1rem; border: 1px solid var(--glass-border); display: flex; align-items: center; justify-content: center; margin-bottom: 3rem; color: var(--text-secondary);">
-                    [ Placeholder: High-Quality Product Screenshot ]
-                </div>
-
-                <div class="grid-2">
-                    <div>
-                        <h3 style="color: var(--accent); margin-bottom: 1rem;">The Problem</h3>
-                        <p>{{ $caseStudy['problem'] }}</p>
+                @if(isset($caseStudy['images']) && count($caseStudy['images']) > 0)
+                    <div class="mb-16 overflow-hidden scroll-animate relative" style="mask-image: linear-gradient(to right, transparent, black 5%, black 95%, transparent); -webkit-mask-image: linear-gradient(to right, transparent, black 5%, black 95%, transparent);">
+                        <div class="flex gap-6 py-4 w-max animate-marquee hover:[animation-play-state:paused]">
+                            <!-- Original set -->
+                            @foreach($caseStudy['images'] as $image)
+                                <div class="flex-none w-[260px] md:w-[280px] rounded-2xl overflow-hidden border border-gray-800 bg-navy-dark shadow-lg">
+                                    <img src="{{ asset('images/passvault/' . $image) }}" alt="{{ $caseStudy['title'] }} Screenshot" class="w-full h-auto block object-cover" onerror="this.src='https://placehold.co/280x600/1a1a2e/4a4e69?text=Pending'">
+                                </div>
+                            @endforeach
+                            <!-- Duplicated set for seamless infinite scroll -->
+                            @foreach($caseStudy['images'] as $image)
+                                <div class="flex-none w-[260px] md:w-[280px] rounded-2xl overflow-hidden border border-gray-800 bg-navy-dark shadow-lg" aria-hidden="true">
+                                    <img src="{{ asset('images/passvault/' . $image) }}" alt="{{ $caseStudy['title'] }} Screenshot" class="w-full h-auto block object-cover" onerror="this.src='https://placehold.co/280x600/1a1a2e/4a4e69?text=Pending'">
+                                </div>
+                            @endforeach
+                        </div>
                         
-                        <h3 style="color: var(--accent); margin-top: 2rem; margin-bottom: 1rem;">The Solution</h3>
-                        <p>{{ $caseStudy['solution'] }}</p>
+                        <style>
+                            @keyframes marquee {
+                                0% {
+                                    transform: translateX(0);
+                                }
+                                100% {
+                                    /* Translate by exactly half the container width minus half the gap (gap-6 is 1.5rem) */
+                                    transform: translateX(calc(-50% - 0.75rem));
+                                }
+                            }
+                            .animate-marquee {
+                                animation: marquee 25s linear infinite;
+                            }
+                        </style>
+                    </div>
+                @else
+                    <div class="w-full h-96 bg-navy-deep rounded-2xl border border-white/10 flex items-center justify-center mb-16 text-gray-500 scroll-animate">
+                        [ Placeholder: High-Quality Product Screenshot ]
+                    </div>
+                @endif
+
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-12 mt-12">
+                    <div class="lg:col-span-2 space-y-12">
+                        <div class="scroll-animate">
+                            <h3 class="text-2xl font-semibold text-white mb-4">The Problem</h3>
+                            <p class="text-gray-400 leading-relaxed text-lg">{{ $caseStudy['problem'] }}</p>
+                        </div>
+                        
+                        <div class="scroll-animate">
+                            <h3 class="text-2xl font-semibold text-white mb-4">The Solution</h3>
+                            <p class="text-gray-400 leading-relaxed text-lg">{{ $caseStudy['solution'] }}</p>
+                        </div>
                     </div>
                     
-                    <div>
-                        <div class="glass-card" style="background: rgba(59, 130, 246, 0.05);">
-                            <h3 style="margin-bottom: 1.5rem;">Measurable Results</h3>
-                            <ul style="list-style: none; padding: 0;">
+                    <div class="scroll-animate">
+                        <div class="bg-navy-dark border border-gray-800 rounded-xl p-8 h-full">
+                            <h3 class="text-xl font-semibold text-white mb-6">Measurable Results</h3>
+                            <ul class="space-y-4">
                                 @foreach($caseStudy['results'] as $result)
-                                    <li style="margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem;">
-                                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                                        {{ $result }}
+                                    <li class="flex items-start gap-3">
+                                        <span class="text-accent mt-1">
+                                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                        </span>
+                                        <span class="text-gray-300">{{ $result }}</span>
                                     </li>
                                 @endforeach
                             </ul>
@@ -95,9 +159,11 @@
                     </div>
                 </div>
                 
-                <div style="margin-top: 4rem; text-align: center; border-top: 1px solid var(--glass-border); padding-top: 3rem;">
-                    <h2>Ready for similar results?</h2>
-                    <a href="{{ route('contact') }}" class="btn-primary" style="margin-top: 1rem;">Start Your Project</a>
+                <div class="mt-20 text-center border-t border-gray-800 pt-16 scroll-animate">
+                    <h2 class="text-3xl font-semibold text-white mb-6">Ready for similar results?</h2>
+                    <a href="{{ route('home') }}#contact" class="inline-block bg-accent hover:bg-blue-600 text-white font-medium py-3 px-8 rounded-lg transition-colors">
+                        Start Your Project
+                    </a>
                 </div>
             </div>
         @endif

@@ -6,17 +6,17 @@
         
         <!-- Desktop Nav -->
         <div class="hidden md:flex items-center gap-8 text-sm font-medium text-white/90" id="nav-links">
-            <a href="/#home" class="hover:text-accent transition-colors">Home</a>
-            <a href="/#services" class="hover:text-accent transition-colors">Services</a>
-            <a href="/#about" class="hover:text-accent transition-colors">About</a>
-            <a href="/#portfolio" class="hover:text-accent transition-colors">Portfolio</a>
-            <a href="/careers" class="hover:text-accent transition-colors">Careers</a>
-            <a href="/#contact" class="hover:text-accent transition-colors">Contact</a>
+            <a href="{{ cms_data('nav.home.link', '/#home') }}" data-cms-href="nav.home.link" class="hover:text-accent transition-colors"><span data-cms-key="nav.home.text">{{ cms_data('nav.home.text', 'Home') }}</span></a>
+            <a href="{{ cms_data('nav.services.link', '/#services') }}" data-cms-href="nav.services.link" class="hover:text-accent transition-colors"><span data-cms-key="nav.services.text">{{ cms_data('nav.services.text', 'Services') }}</span></a>
+            <a href="{{ cms_data('nav.about.link', '/#about') }}" data-cms-href="nav.about.link" class="hover:text-accent transition-colors"><span data-cms-key="nav.about.text">{{ cms_data('nav.about.text', 'About') }}</span></a>
+            <a href="{{ cms_data('nav.portfolio.link', '/#portfolio') }}" data-cms-href="nav.portfolio.link" class="hover:text-accent transition-colors"><span data-cms-key="nav.portfolio.text">{{ cms_data('nav.portfolio.text', 'Portfolio') }}</span></a>
+            <a href="{{ cms_data('nav.careers.link', '/careers') }}" data-cms-href="nav.careers.link" class="hover:text-accent transition-colors"><span data-cms-key="nav.careers.text">{{ cms_data('nav.careers.text', 'Careers') }}</span></a>
+            <a href="{{ cms_data('nav.contact.link', '/#contact') }}" data-cms-href="nav.contact.link" class="hover:text-accent transition-colors"><span data-cms-key="nav.contact.text">{{ cms_data('nav.contact.text', 'Contact') }}</span></a>
         </div>
         
         <div class="hidden md:block">
-            <a href="/#contact" class="px-6 py-3 bg-accent hover:bg-accent-light text-white text-sm font-medium rounded-lg transition-all duration-200">
-                Get Started
+            <a href="{{ cms_data('nav.cta.link', '/#contact') }}" data-cms-href="nav.cta.link" class="px-6 py-3 bg-accent hover:bg-accent-light text-white text-sm font-medium rounded-lg transition-all duration-200">
+                <span data-cms-key="nav.cta.text">{{ cms_data('nav.cta.text', 'Get Started') }}</span>
             </a>
         </div>
 
@@ -38,12 +38,12 @@
          x-transition:leave-start="opacity-100 translate-y-0"
          x-transition:leave-end="opacity-0 -translate-y-4"
          class="md:hidden absolute top-full left-0 w-full bg-navy-deep/95 backdrop-blur-md border-b border-white/10 py-4 px-6 flex flex-col gap-4 text-white shadow-xl" style="display: none;">
-        <a href="/#home" @click="open = false" class="block text-sm font-medium hover:text-accent">Home</a>
-        <a href="/#services" @click="open = false" class="block text-sm font-medium hover:text-accent">Services</a>
-        <a href="/#about" @click="open = false" class="block text-sm font-medium hover:text-accent">About</a>
-        <a href="/#portfolio" @click="open = false" class="block text-sm font-medium hover:text-accent">Portfolio</a>
-        <a href="/careers" @click="open = false" class="block text-sm font-medium hover:text-accent">Careers</a>
-        <a href="/#contact" @click="open = false" class="block text-sm font-medium hover:text-accent">Contact</a>
-        <a href="/#contact" @click="open = false" class="block text-sm font-medium text-accent mt-2">Get Started &rarr;</a>
+        <a href="{{ cms_data('nav.home.link', '/#home') }}" data-cms-href="nav.home.link" @click="open = false" class="block text-sm font-medium hover:text-accent"><span data-cms-key="nav.home.text">{{ cms_data('nav.home.text', 'Home') }}</span></a>
+        <a href="{{ cms_data('nav.services.link', '/#services') }}" data-cms-href="nav.services.link" @click="open = false" class="block text-sm font-medium hover:text-accent"><span data-cms-key="nav.services.text">{{ cms_data('nav.services.text', 'Services') }}</span></a>
+        <a href="{{ cms_data('nav.about.link', '/#about') }}" data-cms-href="nav.about.link" @click="open = false" class="block text-sm font-medium hover:text-accent"><span data-cms-key="nav.about.text">{{ cms_data('nav.about.text', 'About') }}</span></a>
+        <a href="{{ cms_data('nav.portfolio.link', '/#portfolio') }}" data-cms-href="nav.portfolio.link" @click="open = false" class="block text-sm font-medium hover:text-accent"><span data-cms-key="nav.portfolio.text">{{ cms_data('nav.portfolio.text', 'Portfolio') }}</span></a>
+        <a href="{{ cms_data('nav.careers.link', '/careers') }}" data-cms-href="nav.careers.link" @click="open = false" class="block text-sm font-medium hover:text-accent"><span data-cms-key="nav.careers.text">{{ cms_data('nav.careers.text', 'Careers') }}</span></a>
+        <a href="{{ cms_data('nav.contact.link', '/#contact') }}" data-cms-href="nav.contact.link" @click="open = false" class="block text-sm font-medium hover:text-accent"><span data-cms-key="nav.contact.text">{{ cms_data('nav.contact.text', 'Contact') }}</span></a>
+        <a href="{{ cms_data('nav.cta.link', '/#contact') }}" data-cms-href="nav.cta.link" @click="open = false" class="block text-sm font-medium text-accent mt-2"><span data-cms-key="nav.cta.text">{{ cms_data('nav.cta.text', 'Get Started') }}</span> &rarr;</a>
     </div>
 </nav>

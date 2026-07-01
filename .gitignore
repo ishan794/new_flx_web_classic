@@ -24,3 +24,8 @@ _ide_helper.php
 Homestead.json
 Homestead.yaml
 Thumbs.db
+
+# Hostinger Builds
+/hostinger_build/
+/hostinger_build_final/
+

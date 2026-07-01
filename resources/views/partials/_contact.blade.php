@@ -38,25 +38,25 @@
 
                     <div>
                         <input type="text" name="name" placeholder="John Doe" value="{{ old('name') }}" required
-                            class="w-full bg-navy-deep border border-white/10 rounded-lg px-4 py-3 text-white placeholder-gray-500 focus:border-accent focus:outline-none focus:ring-1 focus:ring-accent transition">
+                            class="w-full bg-navy-deep border border-white/10 rounded-xl px-5 py-3 text-white placeholder-gray-500 focus:border-accent focus:outline-none focus:ring-1 focus:ring-accent transition">
                     </div>
                     
                     <div>
                         <input type="email" name="email" placeholder="john@example.com" value="{{ old('email') }}" required
-                            class="w-full bg-navy-deep border border-white/10 rounded-lg px-4 py-3 text-white placeholder-gray-500 focus:border-accent focus:outline-none focus:ring-1 focus:ring-accent transition">
+                            class="w-full bg-navy-deep border border-white/10 rounded-xl px-5 py-3 text-white placeholder-gray-500 focus:border-accent focus:outline-none focus:ring-1 focus:ring-accent transition">
                     </div>
 
                     <div>
                         <input type="text" name="subject" placeholder="Project inquiry / General question" value="{{ old('subject') }}" required
-                            class="w-full bg-navy-deep border border-white/10 rounded-lg px-4 py-3 text-white placeholder-gray-500 focus:border-accent focus:outline-none focus:ring-1 focus:ring-accent transition">
+                            class="w-full bg-navy-deep border border-white/10 rounded-xl px-5 py-3 text-white placeholder-gray-500 focus:border-accent focus:outline-none focus:ring-1 focus:ring-accent transition">
                     </div>
 
                     <div>
                         <textarea name="message" rows="5" placeholder="Tell us about your project, timeline, budget, and any specific requirements..." required
-                            class="w-full bg-navy-deep border border-white/10 rounded-lg px-4 py-3 text-white placeholder-gray-500 focus:border-accent focus:outline-none focus:ring-1 focus:ring-accent transition">{{ old('message') }}</textarea>
+                            class="w-full bg-navy-deep border border-white/10 rounded-xl px-5 py-3 text-white placeholder-gray-500 focus:border-accent focus:outline-none focus:ring-1 focus:ring-accent transition">{{ old('message') }}</textarea>
                     </div>
 
-                    <button type="submit" class="w-full bg-accent hover:bg-accent-light text-white font-medium py-3 rounded-lg transition duration-200">
+                    <button type="submit" class="w-full bg-accent hover:bg-accent-light text-white font-medium py-3 rounded-xl transition duration-200">
                         Send Message &rarr;
                     </button>
                 </form>

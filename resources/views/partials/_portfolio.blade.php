@@ -11,8 +11,59 @@
 
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
             
-            <!-- Project 1 -->
+            <!-- Project 1 (PassVault) -->
             <div class="bg-navy-mid border border-white/10 rounded-2xl p-8 hover:border-accent/40 hover:-translate-y-1 transition-all duration-300 scroll-animate group flex flex-col h-full">
+                <div class="flex justify-between items-start mb-8">
+                    <div class="w-12 h-12 bg-accent/10 rounded-xl flex items-center justify-center text-accent transition-transform group-hover:scale-110 duration-300">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                    </div>
+                    <div class="text-right">
+                        <span class="text-white text-sm font-medium block">Mobile App</span>
+                        <span class="text-gray-500 text-xs">2026</span>
+                    </div>
+                </div>
+                
+                <h3 class="text-white font-bold text-2xl mb-3 group-hover:text-accent transition-colors">PassVault</h3>
+                <p class="text-gray-400 text-sm leading-relaxed mb-8 flex-grow">
+                    A highly secure password manager application that generates unbreakable passwords, syncs securely across all devices, and provides biometric access to your vault.
+                </p>
+                
+                <ul class="text-gray-400 text-sm space-y-3 mb-8">
+                    <li class="flex items-start">
+                        <span class="text-accent mt-0.5 mr-3"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span> 
+                        <span>Strong Password Generation</span>
+                    </li>
+                    <li class="flex items-start">
+                        <span class="text-accent mt-0.5 mr-3"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span> 
+                        <span>Cross-device Cloud Sync</span>
+                    </li>
+                    <li class="flex items-start">
+                        <span class="text-accent mt-0.5 mr-3"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span> 
+                        <span>Biometric Vault Access</span>
+                    </li>
+                    <li class="flex items-start">
+                        <span class="text-accent mt-0.5 mr-3"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span> 
+                        <span>Secure Account Recovery</span>
+                    </li>
+                </ul>
+                
+                <div class="pt-6 border-t border-white/5 mb-6">
+                    <div class="flex flex-wrap gap-3 text-xs text-gray-500 font-medium">
+                        <span>React Native</span>
+                        <span>&bull;</span>
+                        <span>Node.js</span>
+                        <span>&bull;</span>
+                        <span>Cryptography API</span>
+                    </div>
+                </div>
+                
+                <a href="{{ route('portfolio.show', 'passvault') }}" class="inline-flex items-center text-sm font-semibold text-white group-hover:text-accent transition-colors mt-auto">
+                    View Project <span class="ml-2 group-hover:translate-x-1 transition-transform">&rarr;</span>
+                </a>
+            </div>
+
+            <!-- Project 2 -->
+            <div class="bg-navy-mid border border-white/10 rounded-2xl p-8 hover:border-accent/40 hover:-translate-y-1 transition-all duration-300 scroll-animate group flex flex-col h-full" style="transition-delay: 100ms;">
                 <div class="flex justify-between items-start mb-8">
                     <div class="w-12 h-12 bg-accent/10 rounded-xl flex items-center justify-center text-accent transition-transform group-hover:scale-110 duration-300">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg>
