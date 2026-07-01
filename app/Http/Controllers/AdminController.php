@@ -17,7 +17,7 @@ class AdminController extends Controller
         $email = $request->input('email');
         $password = $request->input('password');
 
-        if ($email === env('ADMIN_EMAIL') && $password === env('ADMIN_PASSWORD')) {
+        if ($email === config('app.admin_email') && $password === config('app.admin_password')) {
             session(['is_admin' => true]);
             return redirect()->route('admin.dashboard');
         }
