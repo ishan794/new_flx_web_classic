@@ -111,4 +111,6 @@ jobs:
           password: ${{ secrets.FTP_PASSWORD }}
           server-dir: /
           local-dir: ./deploy_pkg/
+          port: 21
+          timeout: 180000
 
