@@ -33,7 +33,11 @@ class AdminController extends Controller
 
     public function dashboard()
     {
-        $cmsData = json_decode(File::get(storage_path('app/cms/content.json')), true);
+        \$path = storage_path('app/cms/content.json');
+        \$cmsData = [];
+        if (\Illuminate\Support\Facades\File::exists(\$path)) {
+            \$cmsData = json_decode(\Illuminate\Support\Facades\File::get(\$path), true);
+        }
         return view('admin.dashboard', compact('cmsData'));
     }
 
