@@ -103,14 +103,43 @@ jobs:
           }
           echo '<p style=\"color: red; font-weight: bold;\">IMPORTANT: Delete this optimize.php file after you see the success message!</p>';" > deploy_pkg/public_html/optimize.php
 
-      - name: Deploy via FTP to Hostinger
+          # 11. ZIP the deployment package (takes ~5 seconds in runner)
+          cd deploy_pkg
+          zip -r ../deploy.zip laravel public_html
+          cd ..
+
+          # 12. Create a clean upload package containing ONLY deploy.zip and extract.php
+          mkdir -p upload_pkg/public_html
+          mv deploy.zip upload_pkg/deploy.zip
+
+          # 13. Create extract.php utility
+          echo "<?php
+          set_time_limit(0);
+          ini_set('memory_limit', '512M');
+          \$zipFile = dirname(__DIR__) . '/deploy.zip';
+          if (!file_exists(\$zipFile)) {
+              die('deploy.zip not found at: ' . \$zipFile);
+          }
+          \$zip = new ZipArchive;
+          if (\$zip->open(\$zipFile) === TRUE) {
+              \$extractPath = dirname(__DIR__);
+              \$zip->extractTo(\$extractPath);
+              \$zip->close();
+              unlink(\$zipFile);
+              unlink(__FILE__);
+              echo '<h2>🚀 Hostinger Deployment Successful!</h2><p>All files unzipped and updated successfully.</p>';
+          } else {
+              echo '<h2>❌ Extraction Failed!</h2><p>Could not open deploy.zip</p>';
+          }" > upload_pkg/public_html/extract.php
+
+      - name: Deploy via FTP to Hostinger (Lightning Fast - Only 2 files!)
         uses: SamKirkland/FTP-Deploy-Action@v4.3.4
         with:
           server: ${{ secrets.FTP_SERVER }}
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
           server-dir: /
-          local-dir: ./deploy_pkg/
+          local-dir: ./upload_pkg/
           port: 21
           timeout: 180000
 
