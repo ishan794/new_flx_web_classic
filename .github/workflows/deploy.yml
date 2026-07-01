@@ -18,9 +18,6 @@ jobs:
           php-version: '8.2'
           tools: composer:v2
 
-      - name: Install PHP Dependencies
-        run: composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
-
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
@@ -31,15 +28,86 @@ jobs:
           npm ci
           npm run build
 
+      - name: Prepare Hostinger Deployment Structure
+        run: |
+          # 1. Create structure
+          mkdir -p deploy_pkg/laravel
+          
+          # 2. Copy source code (exclude builds, nodes, tests, git configuration)
+          rsync -av --progress . deploy_pkg/laravel --exclude .git --exclude node_modules --exclude hostinger_build --exclude hostinger_build_final --exclude deploy_pkg --exclude .github --exclude tests --exclude .idea --exclude .vscode
+          
+          # 3. Install production dependencies (optimizes classloader maps)
+          cd deploy_pkg/laravel
+          composer install --no-dev --optimize-autoloader
+          cd ../..
+          
+          # 4. Relocate public folder to match Hostinger public_html structure
+          mv deploy_pkg/laravel/public deploy_pkg/public_html
+          
+          # 5. Patch public_html/index.php paths for shared hosting separation
+          sed -i "s|__DIR__\.'/\.\./storage/framework/maintenance\.php'|__DIR__.'/../laravel/storage/framework/maintenance.php'|g" deploy_pkg/public_html/index.php
+          sed -i "s|__DIR__\.'/\.\./vendor/autoload\.php'|__DIR__.'/../laravel/vendor/autoload.php'|g" deploy_pkg/public_html/index.php
+          sed -i "s|__DIR__\.'/\.\./bootstrap/app\.php'|__DIR__.'/../laravel/bootstrap/app.php';\n\$app->usePublicPath(__DIR__)|g" deploy_pkg/public_html/index.php
+          
+          # 6. Configure Production environment configs
+          if [ -f deploy_pkg/laravel/.env ]; then
+            sed -i "s/APP_ENV=local/APP_ENV=production/g" deploy_pkg/laravel/.env
+            sed -i "s/APP_DEBUG=true/APP_DEBUG=false/g" deploy_pkg/laravel/.env
+            sed -i "s/SESSION_DRIVER=database/SESSION_DRIVER=file/g" deploy_pkg/laravel/.env
+            sed -i "s/CACHE_STORE=database/CACHE_STORE=file/g" deploy_pkg/laravel/.env
+          else
+            cp deploy_pkg/laravel/.env.example deploy_pkg/laravel/.env
+            sed -i "s/APP_ENV=local/APP_ENV=production/g" deploy_pkg/laravel/.env
+            sed -i "s/APP_DEBUG=true/APP_DEBUG=false/g" deploy_pkg/laravel/.env
+          fi
+          
+          # 7. Reset cached application boot files
+          find deploy_pkg/laravel/bootstrap/cache/ -type f ! -name '.gitignore' -delete
+          find deploy_pkg/laravel/storage/framework/views/ -type f ! -name '.gitignore' -delete
+          
+          # 8. Ensure folder directories are prepared
+          mkdir -p deploy_pkg/laravel/storage/framework/sessions
+          mkdir -p deploy_pkg/laravel/storage/framework/views
+          mkdir -p deploy_pkg/laravel/storage/framework/cache/data
+          mkdir -p deploy_pkg/laravel/storage/logs
+          mkdir -p deploy_pkg/laravel/bootstrap/cache
+          
+          touch deploy_pkg/laravel/storage/framework/sessions/.gitkeep
+          touch deploy_pkg/laravel/storage/framework/views/.gitkeep
+          touch deploy_pkg/laravel/storage/framework/cache/data/.gitkeep
+          touch deploy_pkg/laravel/storage/logs/.gitkeep
+          touch deploy_pkg/laravel/bootstrap/cache/.gitkeep
+          
+          # 9. Create Symlink helper utility script
+          echo "<?php
+          \$targetFolder = __DIR__.'/../laravel/storage/app/public';
+          \$linkFolder = __DIR__.'/storage';
+          symlink(\$targetFolder, \$linkFolder);
+          echo 'Symlink process successfully completed';" > deploy_pkg/public_html/symlink.php
+          
+          # 10. Create Cache clearing/optimization utility script
+          echo "<?php
+          require __DIR__.'/../laravel/vendor/autoload.php';
+          \$app = require_once __DIR__.'/../laravel/bootstrap/app.php';
+          \$kernel = \$app->make(Illuminate\Contracts\Http\Kernel::class);
+          \$response = \$kernel->handle(\$request = Illuminate\Http\Request::capture());
+          use Illuminate\Support\Facades\Artisan;
+          echo '<h1>Optimization Utility</h1>';
+          try {
+              Artisan::call('optimize:clear');
+              echo '<h3 style=\"color: green;\">Successfully cleared all caches!</h3>';
+              echo '<pre>' . Artisan::output() . '</pre>';
+          } catch (\Exception \$e) {
+              echo '<h3 style=\"color: red;\">Error:</h3><pre>' . \$e->getMessage() . '</pre>';
+          }
+          echo '<p style=\"color: red; font-weight: bold;\">IMPORTANT: Delete this optimize.php file after you see the success message!</p>';" > deploy_pkg/public_html/optimize.php
+
       - name: Deploy via FTP to Hostinger
         uses: SamKirkland/FTP-Deploy-Action@v4.3.4
         with:
           server: ${{ secrets.FTP_SERVER }}
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
-          server-dir: /public_html/
-          exclude: |
-            **/.git*
-            **/.git*/**
-            **/node_modules/**
-            .env.example
+          server-dir: /
+          local-dir: ./deploy_pkg/
+
