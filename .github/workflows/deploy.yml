@@ -112,7 +112,7 @@ jobs:
           mkdir -p upload_pkg/public_html
           mv deploy.zip upload_pkg/deploy.zip
 
-          # 13. Create extract.php utility (with .env protection)
+          # 13. Create extract.php utility (with .env protection, auto-migration, and auto-optimization)
           echo "<?php
           set_time_limit(0);
           ini_set('memory_limit', '512M');
@@ -145,8 +145,33 @@ jobs:
               }
               
               unlink(\$zipFile);
+              
+              // Bootstrap Laravel to run database migrations and clear caches
+              try {
+                  require dirname(__DIR__) . '/laravel/vendor/autoload.php';
+                  \$app = require_once dirname(__DIR__) . '/laravel/bootstrap/app.php';
+                  \$kernel = \$app->make(Illuminate\Contracts\Http\Kernel::class);
+                  \$response = \$kernel->handle(\$request = Illuminate\Http\Request::capture());
+                  
+                  use Illuminate\Support\Facades\Artisan;
+                  
+                  // Run migrations automatically
+                  Artisan::call('migrate', ['--force' => true]);
+                  \$migrateOutput = Artisan::output();
+                  
+                  // Clear caches automatically
+                  Artisan::call('optimize:clear');
+                  \$optimizeOutput = Artisan::output();
+                  
+                  echo '<h2>🚀 Hostinger Deployment Successful!</h2>';
+                  echo '<p>All files unzipped and updated successfully.</p>';
+                  echo '<h3>Database Migration:</h3><pre>' . \$migrateOutput . '</pre>';
+                  echo '<h3>Cache Optimization:</h3><pre>' . \$optimizeOutput . '</pre>';
+              } catch (\Exception \$e) {
+                  echo '<h2>⚠️ Unzipped, but Laravel commands failed:</h2><pre>' . \$e->getMessage() . '</pre>';
+              }
+              
               unlink(__FILE__);
-              echo '<h2>🚀 Hostinger Deployment Successful!</h2><p>All files unzipped and updated successfully.</p>';
           } else {
               echo '<h2>❌ Extraction Failed!</h2><p>Could not open deploy.zip</p>';
           }" > upload_pkg/public_html/extract.php
@@ -161,4 +186,14 @@ jobs:
           local-dir: ./upload_pkg/
           port: 21
           timeout: 180000
+
+      - name: Trigger Automatic Server-side Unzipping, Migration & Optimization
+        run: |
+          # Automatically trigger extraction via HTTP request
+          APP_URL="${{ secrets.APP_URL }}"
+          if [ -z "$APP_URL" ]; then
+            APP_URL="https://magenta-chicken-628198.hostingersite.com"
+          fi
+          echo "Triggering extract.php at $APP_URL/extract.php..."
+          curl -s -L "$APP_URL/extract.php"
 
