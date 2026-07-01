@@ -112,7 +112,7 @@ jobs:
           mkdir -p upload_pkg/public_html
           mv deploy.zip upload_pkg/deploy.zip
 
-          # 13. Create extract.php utility
+          # 13. Create extract.php utility (with .env protection)
           echo "<?php
           set_time_limit(0);
           ini_set('memory_limit', '512M');
@@ -120,11 +120,30 @@ jobs:
           if (!file_exists(\$zipFile)) {
               die('deploy.zip not found at: ' . \$zipFile);
           }
+          
+          // Protect existing production .env file from being overwritten
+          \$envPath = dirname(__DIR__) . '/laravel/.env';
+          \$envBackedUp = false;
+          if (file_exists(\$envPath)) {
+              rename(\$envPath, \$envPath . '.tmp');
+              \$envBackedUp = true;
+          }
+          
           \$zip = new ZipArchive;
           if (\$zip->open(\$zipFile) === TRUE) {
               \$extractPath = dirname(__DIR__);
               \$zip->extractTo(\$extractPath);
               \$zip->close();
+              
+              // Restore production .env if it was backed up
+              if (\$envBackedUp) {
+                  \$newDummyEnv = dirname(__DIR__) . '/laravel/.env';
+                  if (file_exists(\$newDummyEnv)) {
+                      unlink(\$newDummyEnv);
+                  }
+                  rename(\$envPath . '.tmp', \$envPath);
+              }
+              
               unlink(\$zipFile);
               unlink(__FILE__);
               echo '<h2>🚀 Hostinger Deployment Successful!</h2><p>All files unzipped and updated successfully.</p>';
